@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dolar ↔ Manat & Eski Manat</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #0a1b2a, #10283f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+  }
+  .container {
+    background: #132b47;
+    padding: 20px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  input {
+    width: 80%;
+    max-width: 300px;
+    font-size: 22px;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    text-align: center;
+    margin: 15px 0;
+  }
+  .results {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .result-box {
+    flex: 1;
+    margin: 5px;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  .dolar { background: #1e2a3f; color: #ffd700; }
+  .yeniManat { background: #2a4030; color: #00ff7f; }
+  .eskiManat { background: #3f322a; color: #ffb347; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>💵 Dolar 🟩 Manat 🟨 Köne Pulda</h2>
+    <input type="number" id="dolarInput" placeholder="Dolar gir" step="0.01">
+    <div class="results">
+      <div class="result-box dolar" id="dolarText">Dolar: 0</div>
+      <div class="result-box yeniManat" id="yeniManatText">Taza Manatta: 0</div>
+      <div class="result-box eskiManat" id="eskiManatText">Köne Pulda: 0</div>
+    </div>
+  </div>
+
+<script>
+  const yeniManatKur = 19.5;
+  const eskiManatOran = 97.5;
+
+  function guncelle() {
+    const dolar = parseFloat(document.getElementById('dolarInput').value) || 0;
+    const yeniManat = dolar * yeniManatKur;
+    const eskiManat = dolar * eskiManatOran;
+
+    document.getElementById('dolarText').textContent = `Dolar: ${dolar.toFixed(2)}`;
+    document.getElementById('yeniManatText').textContent = `Taza Manatta: ${yeniManat.toFixed(2)}`;
+    document.getElementById('eskiManatText').textContent = `Köne Pulda: ${eskiManat.toFixed(2)}`;
+  }
+
+  document.getElementById('dolarInput').addEventListener('input', guncelle);
+
+  // Service Worker kaydı (offline çalışma için)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
+</script>
+</body>
+</html>
